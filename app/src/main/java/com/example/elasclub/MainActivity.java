@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
     private Uri createUri(){
         File imageFile=new File(getApplicationContext().getFilesDir(),"camera_photo.jpg");
         return FileProvider.getUriForFile(getApplicationContext(),
-                "com.example.bdroomcomcamera.fileprovider", imageFile );
+                "com.example.elasclub.fileprovider", imageFile );
     }
     private void registerPictureLauncher() {
         takePictureLauncher=registerForActivityResult(
