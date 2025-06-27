@@ -23,6 +23,9 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 import androidx.room.Room;
 
+import com.example.elasclub.data.AppDatabase;
+import com.example.elasclub.data.Usuario;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 
@@ -32,7 +35,7 @@ public class CadastroActivity extends AppCompatActivity {
     ActivityResultLauncher<Uri> takePictureLauncher;
     Uri imageUri;
     private EditText edtNome, edtEmail, edtSenha;
-    private Button btnCadastrar;
+    private Button btnCadastrar, btnVoltar;
     private ImageView imgFoto;
     private Bitmap fotoBitmap;
     private AppDatabase db;
@@ -47,6 +50,7 @@ public class CadastroActivity extends AppCompatActivity {
         edtSenha = findViewById(R.id.edtSenha);
         imgFoto = findViewById(R.id.imgFoto);
         btnCadastrar = findViewById(R.id.btnCadastrar);
+        btnVoltar = findViewById(id.btnVoltar);
 
         // Inicializa o banco de dados Room
         db = Room.databaseBuilder(getApplicationContext(),
@@ -57,6 +61,7 @@ public class CadastroActivity extends AppCompatActivity {
         registerPictureLauncher();
 
         btnCadastrar.setOnClickListener(v -> cadastrarUsuario());
+        btnVoltar.setOnClickListener(v -> finish());
     }
 
     private void cadastrarUsuario() {
@@ -84,6 +89,7 @@ public class CadastroActivity extends AppCompatActivity {
 
         Toast.makeText(this, "Usuário cadastrado com sucesso!", Toast.LENGTH_LONG).show();
         limparCampos();
+        finish();
     }
 
     private void limparCampos() {

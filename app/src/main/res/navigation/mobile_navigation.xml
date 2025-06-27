@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_navigation_home_to_navigation_cadastro"
             app:destination="@id/navigation_cadastro" />
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_login"
+            app:destination="@id/navigation_login" />
     </fragment>
 
     <fragment
@@ -26,5 +29,11 @@
         android:name="com.example.elasclub.CadastroActivity"
         android:label="@string/cadastrar"
         tools:layout="@layout/activity_cadastro" />
+
+    <activity
+        android:id="@+id/navigation_login"
+        android:name="com.example.elasclub.ui.LoginActivity"
+        android:label="@string/login"
+        tools:layout="@layout/activity_login" />
 
 </navigation>

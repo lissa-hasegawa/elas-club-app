@@ -1,4 +1,4 @@
-package com.example.elasclub;
+package com.example.elasclub.data;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
