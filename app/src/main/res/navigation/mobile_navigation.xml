@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/navigation_home"
+    android:id="@+id/mobile_navigation">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.example.elasclub.ui.home.HomeFragment"
+        android:label="@string/home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/navigation_produtos"
+        android:name="com.example.elasclub.ui.products.ProductsFragment"
+        android:label="@string/produtos"
+        tools:layout="@layout/fragment_products" />
+
+    <activity
+        android:id="@+id/navigation_cadastro"
+        android:name="com.example.elasclub.CadastroActivity"
+        android:label="@string/cadastrar"
+        tools:layout="@layout/activity_cadastro" />
+
+</navigation>
