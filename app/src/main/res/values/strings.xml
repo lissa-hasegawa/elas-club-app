@@ -8,4 +8,5 @@
     <string name="cadastro">CADASTRE-SE</string>
     <string name="produto">CADASTRAR PRODUTO</string>
     <string name="novo">Cadastro de novo Produto</string>
+    <string name="acoes">Ações</string>
 </resources>

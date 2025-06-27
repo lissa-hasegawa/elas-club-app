@@ -34,6 +34,7 @@ public class CadastroActivity extends AppCompatActivity {
     private static final int CAMERA_PERMISSION_CODE=1;
     ActivityResultLauncher<Uri> takePictureLauncher;
     Uri imageUri;
+    private final String AES_KEY = "1234567890123456"; // AES de 16 bytes
     private EditText edtNome, edtEmail, edtSenha;
     private Button btnCadastrar, btnVoltar;
     private ImageView imgFoto;

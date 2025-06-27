@@ -30,8 +30,8 @@ public class HomeFragment extends Fragment {
 
         binding.btnCadastro.setOnClickListener(v ->
                 NavHostFragment.findNavController(HomeFragment.this)
-                        .navigate(R.id.action_navigation_home_to_navigation_cadastro)
-        );
+                        .navigate(R.id.action_navigation_home_to_navigation_cadastro));
+
         binding.btnLogin.setOnClickListener(v ->
                 NavHostFragment.findNavController(HomeFragment.this)
                         .navigate(R.id.action_navigation_home_to_navigation_login));

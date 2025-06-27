@@ -10,5 +10,9 @@
         android:icon="@drawable/outline_apparel_24"
         android:title="@string/produtos" />
 
+    <item
+        android:id="@+id/navigation_cadastro_produtos"
+        android:icon="@drawable/outline_account_circle_24"
+        android:title="@string/acoes" />
 
 </menu>
