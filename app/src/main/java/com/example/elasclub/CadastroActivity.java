@@ -1,5 +1,7 @@
 package com.example.elasclub;
 
+import static com.example.elasclub.R.*;
+
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -38,7 +40,7 @@ public class CadastroActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_cadastro);
 
         edtNome = findViewById(R.id.edtNome);
         edtEmail = findViewById(R.id.edtEmail);
