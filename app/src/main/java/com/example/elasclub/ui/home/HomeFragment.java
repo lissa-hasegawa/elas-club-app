@@ -32,10 +32,13 @@ public class HomeFragment extends Fragment {
                 NavHostFragment.findNavController(HomeFragment.this)
                         .navigate(R.id.action_navigation_home_to_navigation_cadastro)
         );
-        binding.btnLogin.setOnClickListener(v -> NavHostFragment.findNavController(HomeFragment.this)
-                .navigate(R.id.action_navigation_home_to_navigation_login));
+        binding.btnLogin.setOnClickListener(v ->
+                NavHostFragment.findNavController(HomeFragment.this)
+                        .navigate(R.id.action_navigation_home_to_navigation_login));
 
-
+        binding.btnCadastrarProduto.setOnClickListener(v ->
+                NavHostFragment.findNavController(HomeFragment.this)
+                        .navigate(R.id.action_navigation_home_to_navigation_cadastro_produtos));
     }
 
     @Override

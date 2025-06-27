@@ -14,6 +14,9 @@
             android:id="@+id/action_navigation_home_to_navigation_cadastro"
             app:destination="@id/navigation_cadastro" />
         <action
+            android:id="@+id/action_navigation_home_to_navigation_cadastro_produtos"
+            app:destination="@id/navigation_cadastro_produtos" />
+        <action
             android:id="@+id/action_navigation_home_to_navigation_login"
             app:destination="@id/navigation_login" />
     </fragment>
@@ -35,5 +38,11 @@
         android:name="com.example.elasclub.ui.LoginActivity"
         android:label="@string/login"
         tools:layout="@layout/activity_login" />
+
+    <fragment
+        android:id="@+id/navigation_cadastro_produtos"
+        android:name="com.example.elasclub.ui.actions.CadastroProdutoFragment"
+        android:label="@string/produtos"
+        tools:layout="@layout/fragment_cadastro_produto" />
 
 </navigation>
