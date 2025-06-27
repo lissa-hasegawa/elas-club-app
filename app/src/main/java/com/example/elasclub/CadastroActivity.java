@@ -30,6 +30,7 @@ public class CadastroActivity extends AppCompatActivity {
     ActivityResultLauncher<Uri> takePictureLauncher;
     Uri imageUri;
     private EditText edtNome, edtEmail, edtSenha;
+    private Button btnCadastrar;
     private ImageView imgFoto;
     private Bitmap fotoBitmap;
     private AppDatabase db;
@@ -43,7 +44,7 @@ public class CadastroActivity extends AppCompatActivity {
         edtEmail = findViewById(R.id.edtEmail);
         edtSenha = findViewById(R.id.edtSenha);
         imgFoto = findViewById(R.id.imgFoto);
-        Button btnCadastrar = findViewById(R.id.btnCadastrar);
+        btnCadastrar = findViewById(R.id.btnCadastrar);
 
         // Inicializa o banco de dados Room
         db = Room.databaseBuilder(getApplicationContext(),
