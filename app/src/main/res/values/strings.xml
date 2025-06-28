@@ -11,4 +11,5 @@
     <string name="voltar">VOLTAR</string>
     <string name="lista">Lista de produtos</string>
     <string name="nenhum">Nenhum produto cadastrado</string>
+    <string name="endereco">BUSCAR ENDEREÇO</string>
 </resources>
