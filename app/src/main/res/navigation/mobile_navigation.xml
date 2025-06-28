@@ -19,6 +19,10 @@
         <action
             android:id="@+id/action_navigation_home_to_navigation_login"
             app:destination="@id/navigation_login" />
+
+        <action
+            android:id="@+id/action_navigation_login_to_navigation_produtos"
+            app:destination="@id/navigation_produtos"/>
     </fragment>
 
     <fragment

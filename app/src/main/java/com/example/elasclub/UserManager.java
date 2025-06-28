@@ -17,9 +17,9 @@ public class UserManager {
         this.usuarioDao = db.usuarioDao();
     }
 
-    public void getUsuario(String email, String senha, UsuarioCallback callback) {
+    public void getUsuario(String email, UsuarioCallback callback) {
         new Thread(() -> {
-            Usuario Usuario = usuarioDao.getUserByLogin(email, senha);
+            Usuario Usuario = usuarioDao.getUserByEmail(email);
             callback.onUsuarioLoaded(Usuario);
         }).start();
     }

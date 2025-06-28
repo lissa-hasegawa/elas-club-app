@@ -25,6 +25,7 @@ import androidx.room.Room;
 
 import com.example.elasclub.data.AppDatabase;
 import com.example.elasclub.data.Usuario;
+import com.example.elasclub.security.SecurityUtils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -50,7 +51,7 @@ public class CadastroActivity extends AppCompatActivity {
         edtSenha = findViewById(R.id.edtSenha);
         imgFoto = findViewById(R.id.imgFoto);
         btnCadastrar = findViewById(R.id.btnCadastrar);
-        btnVoltar = findViewById(id.btnVoltar);
+        btnVoltar = findViewById(id.btnVoltarLogin);
 
         // Inicializa o banco de dados Room
         db = Room.databaseBuilder(getApplicationContext(),
@@ -78,11 +79,12 @@ public class CadastroActivity extends AppCompatActivity {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         fotoBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
         byte[] fotoBytes = stream.toByteArray();
+        String hashed = SecurityUtils.hashPassword(senha);
 
         Usuario usuario = new Usuario();
         usuario.nome = nome;
         usuario.email = email;
-        usuario.senha = senha;
+        usuario.senha = hashed;
         usuario.foto = fotoBytes;
 
         db.usuarioDao().inserir(usuario);
