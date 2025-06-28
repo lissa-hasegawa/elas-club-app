@@ -5,9 +5,10 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-@Database(entities = {Usuario.class}, version = 1)
+@Database(entities = {Usuario.class, Produto.class}, version = 2)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract UsuarioDao usuarioDao();
+    public abstract ProdutoDao produtoDao();
     private static volatile AppDatabase INSTANCE;
 
     public static AppDatabase getInstance(Context context) {

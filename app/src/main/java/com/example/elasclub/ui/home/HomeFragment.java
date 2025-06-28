@@ -38,7 +38,7 @@ public class HomeFragment extends Fragment {
 
         binding.btnCadastrarProduto.setOnClickListener(v ->
                 NavHostFragment.findNavController(HomeFragment.this)
-                        .navigate(R.id.action_navigation_home_to_navigation_cadastro_produtos));
+                        .navigate(R.id.action_navigation_home_to_navigation_cadastro_produto));
     }
 
     @Override

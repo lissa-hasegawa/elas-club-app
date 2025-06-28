@@ -2,10 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.actions.CadastroProdutoFragment">
-
+    tools:context=".CadastroProdutoActivity">
 
     <EditText
         android:id="@+id/edtProduto"
@@ -52,7 +52,7 @@
         app:layout_constraintTop_toBottomOf="@+id/edtTamanho" />
 
     <EditText
-        android:id="@+id/etdDescricao"
+        android:id="@+id/edtDescricao"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
@@ -71,15 +71,26 @@
         android:onClick="capturarImagem"
         android:src="@drawable/outline_add_a_photo_24"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etdDescricao" />
+        app:layout_constraintTop_toBottomOf="@+id/edtDescricao" />
 
     <Button
         android:id="@+id/btnNovoProduto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="140dp"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="40dp"
         android:text="@string/cadastrar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imgViewFoto" />
+
+    <Button
+        android:id="@+id/btnVoltarProduto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="160dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/voltar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnNovoProduto" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

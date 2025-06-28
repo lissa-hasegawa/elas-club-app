@@ -60,7 +60,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:text="Cadastrar"
+        android:text="@string/cadastrar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.531"
         app:layout_constraintStart_toStartOf="parent"
@@ -72,7 +72,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="168dp"
         android:layout_marginTop="8dp"
-        android:text="Voltar"
+        android:text="@string/voltar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnCadastrar" />
 
