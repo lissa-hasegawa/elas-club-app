@@ -23,11 +23,11 @@ import androidx.room.Room;
 
 import com.example.elasclub.data.AppDatabase;
 import com.example.elasclub.data.Produto;
-import com.example.elasclub.data.Usuario;
-import com.example.elasclub.security.SecurityUtils;
+import com.example.elasclub.data.ProdutoDao;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.util.concurrent.Executors;
 
 public class CadastroProdutoActivity extends AppCompatActivity {
     private static final int CAMERA_PERMISSION_CODE=1;
@@ -37,7 +37,7 @@ public class CadastroProdutoActivity extends AppCompatActivity {
     private Button btnNovoProduto, btnVoltarProduto;
     private ImageView imgFoto;
     private Bitmap fotoBitmap;
-    private AppDatabase db;
+    private ProdutoDao produtoDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,15 +48,14 @@ public class CadastroProdutoActivity extends AppCompatActivity {
         edtTamanho = findViewById(R.id.edtTamanho);
         edtCor = findViewById(R.id.edtCor);
         edtDescricao = findViewById(R.id.edtDescricao);
+        imgFoto = findViewById(R.id.imgViewFoto);
         btnNovoProduto = findViewById(R.id.btnNovoProduto);
         btnVoltarProduto = findViewById(R.id.btnVoltarProduto);
 
-        // Inicializa o banco de dados Room
-        db = Room.databaseBuilder(getApplicationContext(),
-                        AppDatabase.class, "meu_banco.db")
-                .allowMainThreadQueries() // Apenas para testes; evite em produção
-                .build();
-        imageUri=createUri();
+        AppDatabase db = AppDatabase.getInstance(getApplicationContext());
+        produtoDao = db.produtoDao();
+
+        imageUri = createUri();
         registerPictureLauncher();
 
         btnNovoProduto.setOnClickListener(v -> cadastrarProduto());
@@ -86,11 +85,22 @@ public class CadastroProdutoActivity extends AppCompatActivity {
         produto1.descricao = descricao;
         produto1.foto = fotoBytes;
 
-        db.produtoDao().inserir(produto1);
-
-        Toast.makeText(this, "Produto cadastrado com sucesso!", Toast.LENGTH_LONG).show();
-        limparCampos();
-        finish();
+        // Executa a operação de inserção em uma thread de background
+        Executors.newSingleThreadExecutor().execute(() -> {
+            try {
+                produtoDao.inserir(produto1);
+                runOnUiThread(() -> { // Volta para a thread UI para o Toast e limpar campos
+                    Toast.makeText(this, "Produto cadastrado com sucesso!", Toast.LENGTH_LONG).show();
+                    limparCampos();
+                    finish(); // Fecha a Activity após o cadastro
+                });
+            } catch (Exception e) {
+                runOnUiThread(() -> {
+                    Toast.makeText(this, "Erro ao cadastrar produto: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                });
+                e.printStackTrace();
+            }
+        });
     }
 
     private void limparCampos() {
