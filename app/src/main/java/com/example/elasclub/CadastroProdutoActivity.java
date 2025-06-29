@@ -1,9 +1,15 @@
 package com.example.elasclub;
 
+import static android.Manifest.permission.POST_NOTIFICATIONS;
+
 import android.Manifest;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
@@ -18,11 +24,15 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
 import com.example.elasclub.data.AppDatabase;
 import com.example.elasclub.data.Produto;
 import com.example.elasclub.data.ProdutoDao;
+import com.example.elasclub.databinding.ActivityCadastroProdutoBinding;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -30,6 +40,7 @@ import java.util.concurrent.Executors;
 
 public class CadastroProdutoActivity extends AppCompatActivity {
     private static final int CAMERA_PERMISSION_CODE=1;
+    private static final int PERMISSION_REQUEST_CODE = 200;
     ActivityResultLauncher<Uri> takePictureLauncher;
     Uri imageUri;
     private EditText edtProduto, edtTamanho, edtCor, edtDescricao;
@@ -37,6 +48,7 @@ public class CadastroProdutoActivity extends AppCompatActivity {
     private ImageView imgFoto;
     private Bitmap fotoBitmap;
     private ProdutoDao produtoDao;
+    private ActivityCadastroProdutoBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +71,19 @@ public class CadastroProdutoActivity extends AppCompatActivity {
 
         btnNovoProduto.setOnClickListener(v -> cadastrarProduto());
         btnVoltarProduto.setOnClickListener(v -> finish());
+
+        binding = ActivityCadastroProdutoBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        if (!checkPermission()) {
+            requestPermissions();
+        }
+/*
+        binding.btnNovoProduto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                emitirNotificacao();
+            }
+        });*/
     }
 
     private void cadastrarProduto() {
@@ -89,7 +114,8 @@ public class CadastroProdutoActivity extends AppCompatActivity {
             try {
                 produtoDao.inserir(produto1);
                 runOnUiThread(() -> { // Volta para a thread UI para o Toast e limpar campos
-                    Toast.makeText(this, "Produto cadastrado com sucesso!", Toast.LENGTH_LONG).show();
+                    emitirNotificacao();
+                    //Toast.makeText(this, "Produto cadastrado com sucesso!", Toast.LENGTH_LONG).show();
                     limparCampos();
                     finish(); // Fecha a Activity após o cadastro
                 });
@@ -165,5 +191,41 @@ public class CadastroProdutoActivity extends AppCompatActivity {
                 Toast.makeText(this,"Request Permission Denied", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+    private boolean checkPermission() {
+        int result = ContextCompat.checkSelfPermission(getApplicationContext(), POST_NOTIFICATIONS);
+        return result == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private void requestPermissions() {
+        ActivityCompat.requestPermissions(this, new String[]{POST_NOTIFICATIONS},
+                PERMISSION_REQUEST_CODE);
+    }
+    private void emitirNotificacao() {
+        String CHANNEL_ID = "com.example.elasclub";
+        String CHANNEL_NAME = "CHANNEL_NAME_APP_ELASCLUB";
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID,
+                    CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
+            final NotificationManager notificationManager = (NotificationManager)
+                    getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager.createNotificationChannel(channel);
+        }
+        String titulo = "Novo Produto Casdastrado";
+        String mensagem = "Um novo produto foi cadastrado!!";
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(
+                CadastroProdutoActivity.this, CHANNEL_ID)
+                .setSmallIcon(android.R.drawable.stat_notify_more)
+                .setContentTitle(titulo).setContentText(mensagem)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setAutoCancel(true);
+        NotificationManagerCompat notif = NotificationManagerCompat.from(CadastroProdutoActivity    .this);
+        Toast.makeText(this, "NOTIFICAÇÂO EMITIDA", Toast.LENGTH_LONG).show();
+        if (ActivityCompat.checkSelfPermission(this, POST_NOTIFICATIONS)
+                !=PackageManager.PERMISSION_GRANTED) {
+            requestPermissions();
+            return;
+        }
+        notif.notify(0, builder.build());
     }
 }
