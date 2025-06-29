@@ -52,16 +52,14 @@ public class LoginActivity extends AppCompatActivity {
             String emailDigitado = edtLoginEmail.getText().toString(); // Captura AGORA
             String senhaDigitada = edtLoginSenha.getText().toString(); // Captura AGORA
 
-            // Chama o UserManager com email E senha
-            // Você precisará mudar a assinatura de getUsuario no UserManager
             userManager.getUsuario(emailDigitado, new UserManager.UsuarioCallback() {
                 @Override
-                public void onUsuarioLoaded(Usuario user) { // O callback ainda recebe o objeto User
-                    runOnUiThread(() -> { // Garante que o Toast roda na UI thread
+                public void onUsuarioLoaded(Usuario user) {
+                    runOnUiThread(() -> {
                         if (user != null) {
                                 Toast.makeText(LoginActivity.this, "Seja bem-vindo(a)!", Toast.LENGTH_LONG).show();
-                                /*Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                                startActivity(intent);*/
+                                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                                startActivity(intent);
                             }
                         else {
                             Toast.makeText(LoginActivity.this, "Usuário não encontrado", Toast.LENGTH_LONG).show();

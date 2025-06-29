@@ -12,4 +12,8 @@ public class Usuario {
     public String senha;
     public String hashedPassword;
     public byte[] foto;
+
+    public String getHashedPassword() {
+        return hashedPassword;
+    }
 }

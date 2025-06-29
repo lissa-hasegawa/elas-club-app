@@ -62,31 +62,25 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                 NavHostFragment.findNavController(HomeFragment.this)
                         .navigate(R.id.action_navigation_home_to_navigation_login));
 
-        binding.btnCadastrarProduto.setOnClickListener(v ->
-                NavHostFragment.findNavController(HomeFragment.this)
-                        .navigate(R.id.action_navigation_home_to_navigation_cadastro_produto));
-
         binding.btnEndereco.setOnClickListener(v -> buscarLocPeloEndereco());
     }
 
     @Override
     public void onMapReady(@NonNull GoogleMap map) {
         googleMap = map;
-        // Configurações iniciais do mapa (opcional)
-        // Por exemplo, mover a câmera para uma localização padrão
         LatLng saoPaulo = new LatLng(-23.55052, -46.633309); // Coordenadas de São Paulo
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(saoPaulo, 10)); // Zoom de 10
     }
 
     private void buscarLocPeloEndereco() {
-        String enderecoStr = binding.edtTitulo.getText().toString().trim(); // edtTitulo é o EditText do endereço
+        String enderecoStr = binding.edtTitulo.getText().toString().trim();
 
         if (enderecoStr.isEmpty()) {
             Toast.makeText(getContext(), "Por favor, digite um endereço.", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        // Executa a operação de geocoding em uma thread de background para não bloquear a UI
+
         Executors.newSingleThreadExecutor().execute(() -> {
             try {
                 List<Address> addresses = geocoder.getFromLocationName(enderecoStr, 1); // Busca 1 resultado
