@@ -71,19 +71,6 @@ public class CadastroProdutoActivity extends AppCompatActivity {
 
         btnNovoProduto.setOnClickListener(v -> cadastrarProduto());
         btnVoltarProduto.setOnClickListener(v -> finish());
-
-        binding = ActivityCadastroProdutoBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-        if (!checkPermission()) {
-            requestPermissions();
-        }
-/*
-        binding.btnNovoProduto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                emitirNotificacao();
-            }
-        });*/
     }
 
     private void cadastrarProduto() {
@@ -115,7 +102,6 @@ public class CadastroProdutoActivity extends AppCompatActivity {
                 produtoDao.inserir(produto1);
                 runOnUiThread(() -> { // Volta para a thread UI para o Toast e limpar campos
                     emitirNotificacao();
-                    //Toast.makeText(this, "Produto cadastrado com sucesso!", Toast.LENGTH_LONG).show();
                     limparCampos();
                     finish(); // Fecha a Activity após o cadastro
                 });
