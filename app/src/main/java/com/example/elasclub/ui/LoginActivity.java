@@ -7,6 +7,8 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.elasclub.CadastroActivity;
+import com.example.elasclub.HomeActivity;
+import com.example.elasclub.MainActivity;
 import com.example.elasclub.R;
 import android.widget.*;
 import androidx.core.graphics.Insets;
@@ -57,10 +59,12 @@ public class LoginActivity extends AppCompatActivity {
                 public void onUsuarioLoaded(Usuario user) { // O callback ainda recebe o objeto User
                     runOnUiThread(() -> { // Garante que o Toast roda na UI thread
                         if (user != null) {
-                            Toast.makeText(LoginActivity.this, "Login bem-sucedido!", Toast.LENGTH_LONG).show();
-                            // TODO: Redirecionar para a tela principal
-                        } else {
-                            Toast.makeText(LoginActivity.this, "Email ou senha incorretos.", Toast.LENGTH_LONG).show();
+                                Toast.makeText(LoginActivity.this, "Seja bem-vindo(a)!", Toast.LENGTH_LONG).show();
+                                /*Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                                startActivity(intent);*/
+                            }
+                        else {
+                            Toast.makeText(LoginActivity.this, "Usuário não encontrado", Toast.LENGTH_LONG).show();
                         }
                     });
                 }
@@ -68,7 +72,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         tvLink.setOnClickListener(v -> {
-            Intent intent = new Intent(LoginActivity.this, CadastroActivity.class); // Altere para sua Activity de Cadastro
+            Intent intent = new Intent(LoginActivity.this, CadastroActivity.class);
             startActivity(intent);
         });
     }
