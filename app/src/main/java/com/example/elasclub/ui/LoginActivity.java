@@ -1,9 +1,12 @@
 package com.example.elasclub.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.elasclub.CadastroActivity;
 import com.example.elasclub.R;
 import android.widget.*;
 import androidx.core.graphics.Insets;
@@ -11,6 +14,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.elasclub.UserManager;
+import com.example.elasclub.data.Usuario;
 import com.example.elasclub.security.SecurityUtils;
 
 public class LoginActivity extends AppCompatActivity {
@@ -19,6 +23,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button btnLogar;
     private ImageButton btnVoltar;
     private UserManager userManager;
+    private TextView tvLink;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,20 +41,35 @@ public class LoginActivity extends AppCompatActivity {
         edtLoginSenha = findViewById(R.id.edtLoginSenha);
         btnLogar = findViewById(R.id.btnLogar);
         btnVoltar = findViewById(R.id.btnVoltarLogin);
+        tvLink = findViewById(R.id.tvLink);
 
-        String email = edtLoginEmail.getText().toString();
-        String senha = SecurityUtils.hashPassword(edtLoginEmail.getText().toString());
 
         btnVoltar.setOnClickListener(v -> finish());
 
         btnLogar.setOnClickListener(v -> {
-            userManager.getUsuario(email, user -> runOnUiThread(() -> {
-                if (user != null) {
-                    Toast.makeText(this, "Deu certo!", Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(this, "Usuário não encontrado", Toast.LENGTH_LONG).show();
+            String emailDigitado = edtLoginEmail.getText().toString(); // Captura AGORA
+            String senhaDigitada = edtLoginSenha.getText().toString(); // Captura AGORA
+
+            // Chama o UserManager com email E senha
+            // Você precisará mudar a assinatura de getUsuario no UserManager
+            userManager.getUsuario(emailDigitado, new UserManager.UsuarioCallback() {
+                @Override
+                public void onUsuarioLoaded(Usuario user) { // O callback ainda recebe o objeto User
+                    runOnUiThread(() -> { // Garante que o Toast roda na UI thread
+                        if (user != null) {
+                            Toast.makeText(LoginActivity.this, "Login bem-sucedido!", Toast.LENGTH_LONG).show();
+                            // TODO: Redirecionar para a tela principal
+                        } else {
+                            Toast.makeText(LoginActivity.this, "Email ou senha incorretos.", Toast.LENGTH_LONG).show();
+                        }
+                    });
                 }
-            }));
+            });
+        });
+
+        tvLink.setOnClickListener(v -> {
+            Intent intent = new Intent(LoginActivity.this, CadastroActivity.class); // Altere para sua Activity de Cadastro
+            startActivity(intent);
         });
     }
 }

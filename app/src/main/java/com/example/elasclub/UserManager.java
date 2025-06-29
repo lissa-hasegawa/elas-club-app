@@ -16,13 +16,13 @@ public class UserManager {
         AppDatabase db = AppDatabase.getInstance(context);
         this.usuarioDao = db.usuarioDao();
     }
-
     public void getUsuario(String email, UsuarioCallback callback) {
         new Thread(() -> {
-            Usuario Usuario = usuarioDao.getUserByEmail(email);
-            callback.onUsuarioLoaded(Usuario);
+            Usuario usuario = usuarioDao.getUserByEmail(email);
+            callback.onUsuarioLoaded(usuario);
         }).start();
     }
+
 
     public interface UsuarioCallback {
         void onUsuarioLoaded(Usuario Usuario);

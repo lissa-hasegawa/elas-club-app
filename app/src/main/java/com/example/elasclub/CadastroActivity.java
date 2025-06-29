@@ -25,10 +25,12 @@ import androidx.room.Room;
 
 import com.example.elasclub.data.AppDatabase;
 import com.example.elasclub.data.Usuario;
+import com.example.elasclub.data.UsuarioDao;
 import com.example.elasclub.security.SecurityUtils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.util.concurrent.Executors;
 
 public class CadastroActivity extends AppCompatActivity {
 
@@ -39,7 +41,7 @@ public class CadastroActivity extends AppCompatActivity {
     private Button btnCadastrar, btnVoltar;
     private ImageView imgFoto;
     private Bitmap fotoBitmap;
-    private AppDatabase db;
+    private UsuarioDao usuarioDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,10 +56,9 @@ public class CadastroActivity extends AppCompatActivity {
         btnVoltar = findViewById(id.btnVoltarLogin);
 
         // Inicializa o banco de dados Room
-        db = Room.databaseBuilder(getApplicationContext(),
-                        AppDatabase.class, "meu_banco.db")
-                .allowMainThreadQueries() // Apenas para testes; evite em produção
-                .build();
+        AppDatabase db = AppDatabase.getInstance(getApplicationContext());
+        usuarioDao = db.usuarioDao();
+
         imageUri=createUri();
         registerPictureLauncher();
 
@@ -84,14 +85,24 @@ public class CadastroActivity extends AppCompatActivity {
         Usuario usuario = new Usuario();
         usuario.nome = nome;
         usuario.email = email;
-        usuario.senha = hashed;
+        usuario.senha = senha;
+        usuario.hashedPassword = hashed;
         usuario.foto = fotoBytes;
-
-        db.usuarioDao().inserir(usuario);
-
-        Toast.makeText(this, "Usuário cadastrado com sucesso!", Toast.LENGTH_LONG).show();
-        limparCampos();
-        finish();
+        Executors.newSingleThreadExecutor().execute(() -> {
+            try {
+                usuarioDao.inserir(usuario);
+                runOnUiThread(() -> { // Volta para a thread UI para o Toast e limpar campos
+                    Toast.makeText(this, "Usuário cadastrado com sucesso!", Toast.LENGTH_LONG).show();
+                    limparCampos();
+                    finish(); // Fecha a Activity após o cadastro
+                });
+            } catch (Exception e) {
+                runOnUiThread(() -> {
+                    Toast.makeText(this, "Erro ao cadastrar usuário: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                });
+                e.printStackTrace();
+            }
+        });
     }
 
     private void limparCampos() {

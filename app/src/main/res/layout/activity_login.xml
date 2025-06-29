@@ -83,7 +83,7 @@
         app:layout_constraintTop_toBottomOf="@id/edtLoginSenha" />
 
     <TextView
-        android:id="@+id/textViewRegisterLink"
+        android:id="@+id/tvLink"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Não tem conta? Cadastre-se"
