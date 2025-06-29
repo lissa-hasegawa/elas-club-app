@@ -57,9 +57,13 @@ public class LoginActivity extends AppCompatActivity {
                 public void onUsuarioLoaded(Usuario user) {
                     runOnUiThread(() -> {
                         if (user != null) {
+                            if (SecurityUtils.verifyPassword(senhaDigitada, user.getHashedPassword())){
                                 Toast.makeText(LoginActivity.this, "Seja bem-vindo(a)!", Toast.LENGTH_LONG).show();
                                 Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                                 startActivity(intent);
+                            }
+                            else
+                                Toast.makeText(LoginActivity.this, "Email ou senha errados", Toast.LENGTH_LONG).show();
                             }
                         else {
                             Toast.makeText(LoginActivity.this, "Usuário não encontrado", Toast.LENGTH_LONG).show();

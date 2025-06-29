@@ -42,6 +42,7 @@ public class CadastroActivity extends AppCompatActivity {
     private ImageView imgFoto;
     private Bitmap fotoBitmap;
     private UsuarioDao usuarioDao;
+    private final String AES_KEY = "1234567890123456"; // AES de 16 bytes
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
