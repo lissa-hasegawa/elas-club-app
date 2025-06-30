@@ -8,6 +8,7 @@
     <string name="cadastro">CADASTRE-SE</string>
     <string name="produto">CADASTRAR PRODUTO</string>
     <string name="novo">Cadastro de novo Produto</string>
+    <string name="novo2">Cadastrar novo Produto</string>
     <string name="voltar">VOLTAR</string>
     <string name="lista">Lista de produtos</string>
     <string name="nenhum">Nenhum produto cadastrado</string>

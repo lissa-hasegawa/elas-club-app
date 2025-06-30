@@ -18,7 +18,7 @@
         android:layout_marginEnd="24dp"
         android:backgroundTint="@color/rosa"
         android:padding="14dp"
-        android:text="Cadastrar Novo Produto"
+        android:text="@string/novo2"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
